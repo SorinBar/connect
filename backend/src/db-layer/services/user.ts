@@ -1,9 +1,25 @@
-import { NewUser } from '../models/user';
+import { ObjectId } from 'mongodb';
+import { DbCollections } from '../database';
+import { NewUserDb, UserDb } from '../models/user';
+import {
+    createDocument,
+    deleteDocument,
+    readDocument,
+    updateDocument,
+} from './template';
 
-export async function createUser(newUser: NewUser) {
-    // await usersCollection.insertOne({
-    //     name: 'User1',
-    //     email: 'mail1@gmail.com',
-    //     password: 'pass1',
-    // } as NewUser);
+export async function createUser(newUser: NewUserDb): Promise<void> {
+    return await createDocument<NewUserDb>(DbCollections.Users, newUser);
+}
+
+export async function readUser(_id: ObjectId): Promise<UserDb | null> {
+    return await readDocument<UserDb>(DbCollections.Users, _id);
+}
+
+export async function updateUser(user: UserDb): Promise<void> {
+    return await updateDocument<UserDb>(DbCollections.Users, user);
+}
+
+export async function deleteUser(_id: ObjectId): Promise<void> {
+    return await deleteDocument(DbCollections.Users, _id);
 }

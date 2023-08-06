@@ -1,7 +1,7 @@
 import usersMigrate from './migrations/user';
 import { Database } from './database';
 
-async function exec() {
+async function migrate() {
     try {
         Database.connect();
         console.log('Connected successfully to MongoDB');
@@ -16,4 +16,4 @@ async function exec() {
     }
 }
 
-exec();
+migrate();
