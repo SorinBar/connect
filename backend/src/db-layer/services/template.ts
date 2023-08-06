@@ -1,9 +1,6 @@
 import { ObjectId } from 'mongodb';
 import { Database, DbCollections } from '../database';
-
-export interface Id {
-    _id: ObjectId;
-}
+import { Id } from '../utils/id';
 
 export async function createDocument<T extends Object>(
     collectionName: DbCollections,
