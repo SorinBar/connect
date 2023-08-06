@@ -1,5 +1,5 @@
 import { ObjectId } from 'mongodb';
-import { Database, DbCollections } from '../database';
+import { DbCollections } from '../database';
 import { NewUserDb, UserDb } from '../models/user';
 import {
     createDocument,
