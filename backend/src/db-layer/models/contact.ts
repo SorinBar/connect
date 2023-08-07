@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongodb';
 import { Id } from '../utils/id';
 
-export interface NewContactInfoDb {
+export interface NewContactDb {
     userId: ObjectId;
     phone?: string;
     email?: string;
@@ -9,4 +9,4 @@ export interface NewContactInfoDb {
     facebook?: string;
 }
 
-export type ContactInfoDb = NewContactInfoDb & Id;
+export type ContactDb = NewContactDb & Id;

@@ -3,7 +3,6 @@ import { NewUserDb } from './models/user';
 
 const test = async () => {
     console.log(Database.connect());
-    console.log(Database.dbName);
 
     const usersCollection = Database.getCollection(DbCollections.Users);
 

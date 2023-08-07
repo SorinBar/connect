@@ -1,6 +1,7 @@
-import usersMigrate from './migrations/user';
 import { Database } from './database';
 import { ExitCodes } from './utils/codes';
+import usersMigrate from './migrations/user';
+import contactsMigrate from './migrations/contact';
 
 async function migrate() {
     try {
@@ -11,6 +12,7 @@ async function migrate() {
         console.log(`Started migration:`);
 
         await usersMigrate();
+        await contactsMigrate();
 
         Database.disconnect();
         console.log('Migrations completed successfully');

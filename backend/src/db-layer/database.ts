@@ -3,6 +3,7 @@ import * as dotenv from 'dotenv';
 
 export enum DbCollections {
     Users = 'users',
+    Contacts = 'contacts',
 }
 
 export class Database {

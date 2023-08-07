@@ -46,7 +46,6 @@ export async function deleteDocument(
     collectionName: DbCollections,
     _id: ObjectId
 ): Promise<void> {
-    let result = undefined;
     try {
         await Database.getCollection(collectionName).deleteOne({
             _id,
