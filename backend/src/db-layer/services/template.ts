@@ -1,9 +1,6 @@
 import { ObjectId } from 'mongodb';
 import { Database, DbCollections } from '../database';
-
-export interface Id {
-    _id: ObjectId;
-}
+import { Id } from '../utils/id';
 
 export async function createDocument<T extends Object>(
     collectionName: DbCollections,
@@ -18,13 +15,13 @@ export async function createDocument<T extends Object>(
 
 export async function readDocument<T extends Object>(
     collectionName: DbCollections,
-    _id: ObjectId
+    query: Partial<T>
 ): Promise<T | null> {
     let document: T | null = null;
     try {
-        document = (await Database.getCollection(collectionName).findOne({
-            _id,
-        })) as T | null;
+        document = (await Database.getCollection(collectionName).findOne(
+            query
+        )) as T | null;
     } catch (error) {
         console.log(error);
     }
@@ -49,7 +46,6 @@ export async function deleteDocument(
     collectionName: DbCollections,
     _id: ObjectId
 ): Promise<void> {
-    let result = undefined;
     try {
         await Database.getCollection(collectionName).deleteOne({
             _id,

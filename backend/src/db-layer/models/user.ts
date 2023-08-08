@@ -1,4 +1,4 @@
-import { ObjectId } from 'mongodb';
+import { Id } from '../utils/id';
 
 export interface NewUserDb {
     name: string;
@@ -6,6 +6,4 @@ export interface NewUserDb {
     password: string;
 }
 
-export type UserDb = NewUserDb & {
-    _id: ObjectId;
-};
+export type UserDb = NewUserDb & Id;

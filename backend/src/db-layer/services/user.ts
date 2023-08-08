@@ -12,8 +12,8 @@ export async function createUser(newUser: NewUserDb): Promise<void> {
     return await createDocument<NewUserDb>(DbCollections.Users, newUser);
 }
 
-export async function readUser(_id: ObjectId): Promise<UserDb | null> {
-    return await readDocument<UserDb>(DbCollections.Users, _id);
+export async function readUser(query: Partial<UserDb>): Promise<UserDb | null> {
+    return await readDocument<UserDb>(DbCollections.Users, query);
 }
 
 export async function updateUser(user: UserDb): Promise<void> {
