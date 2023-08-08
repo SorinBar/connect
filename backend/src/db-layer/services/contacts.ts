@@ -15,8 +15,10 @@ export async function createContact(newContact: NewContactDb): Promise<void> {
     );
 }
 
-export async function readContact(_id: ObjectId): Promise<ContactDb | null> {
-    return await readDocument<ContactDb>(DbCollections.Contacts, _id);
+export async function readContact(
+    query: Partial<ContactDb>
+): Promise<ContactDb | null> {
+    return await readDocument<ContactDb>(DbCollections.Contacts, query);
 }
 
 export async function updateContact(contact: ContactDb): Promise<void> {

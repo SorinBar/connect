@@ -1,7 +1,6 @@
 import { NewUserDb } from '../models/user';
 import { Database, DbCollections } from '../database';
-import { createUser, readUser, readUserByEmail } from '../services/user';
-import { ObjectId } from 'mongodb';
+import { createUser } from '../services/user';
 
 export default async function usersMigrate(): Promise<void> {
     console.log(`Collection: ${DbCollections.Users}`);
