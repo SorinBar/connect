@@ -1,5 +1,9 @@
-export interface User {
-    name: string
-    username: string
-    password: string
+import { IdString } from '../utils/idString';
+
+export interface NewUser {
+    name: string;
+    email: string;
+    password: string;
 }
+
+export type User = NewUser & IdString;
