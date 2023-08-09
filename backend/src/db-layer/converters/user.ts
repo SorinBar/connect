@@ -8,12 +8,6 @@ export function NewUserToNewUserDb(newUser: NewUser): NewUserDb {
     };
 }
 
-export function NewUserDbToNewUser(newUserDb: NewUserDb): NewUser {
-    return {
-        ...newUserDb,
-    };
-}
-
 export function UserToUserDb(user: User): UserDb {
     return {
         ...user,
