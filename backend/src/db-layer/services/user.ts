@@ -1,6 +1,5 @@
 import { ObjectId } from 'mongodb';
 import { DbCollections } from '../database';
-import { NewUser, User } from '../../api/models/user';
 import { NewUserDb, UserDb } from '../models/user';
 import {
     createDocument,
@@ -8,32 +7,17 @@ import {
     readDocument,
     updateDocument,
 } from './template';
-import {
-    NewUserToNewUserDb,
-    UserDbToUser,
-    UserToUserDb,
-} from '../converters/user';
 
-export async function createUser(newUser: NewUser): Promise<void> {
-    return await createDocument<NewUserDb>(
-        DbCollections.Users,
-        NewUserToNewUserDb(newUser)
-    );
+export async function createUser(newUserDb: NewUserDb): Promise<void> {
+    return await createDocument<NewUserDb>(DbCollections.Users, newUserDb);
 }
 
-export async function readUser(query: Partial<UserDb>): Promise<User | null> {
-    const userDb = await readDocument<UserDb>(DbCollections.Users, query);
-    if (userDb === null) {
-        return null;
-    }
-    return UserDbToUser(userDb);
+export async function readUser(query: Partial<UserDb>): Promise<UserDb | null> {
+    return await readDocument<UserDb>(DbCollections.Users, query);
 }
 
-export async function updateUser(user: User): Promise<void> {
-    return await updateDocument<UserDb>(
-        DbCollections.Users,
-        UserToUserDb(user)
-    );
+export async function updateUser(userDb: UserDb): Promise<void> {
+    return await updateDocument<UserDb>(DbCollections.Users, userDb);
 }
 
 export async function deleteUser(_id: string): Promise<void> {

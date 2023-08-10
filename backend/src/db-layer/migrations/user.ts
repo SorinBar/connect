@@ -1,6 +1,6 @@
 import { Database, DbCollections } from '../database';
+import { NewUserDb } from '../models/user';
 import { createUser } from '../services/user';
-import { NewUser } from '../../api/models/user';
 
 export default async function usersMigrate(): Promise<void> {
     console.log(`Collection: ${DbCollections.Users}`);
@@ -11,13 +11,13 @@ export default async function usersMigrate(): Promise<void> {
         name: 'User1',
         email: 'mail1@gmail.com',
         password: 'pass1',
-    } as NewUser);
+    } as NewUserDb);
 
     await createUser({
         name: 'User2',
         email: 'mail2@gmail.com',
         password: 'pass2',
-    } as NewUser);
+    } as NewUserDb);
 
     console.log(`Done ${DbCollections.Users}`);
 }

@@ -7,38 +7,22 @@ import {
     readDocument,
     updateDocument,
 } from './template';
-import { Contact, NewContact } from '../../api/models/contacts';
-import {
-    ContactDbToContact,
-    ContactToContactDb,
-    NewContactToNewContactDb,
-} from '../converters/contacts';
 
-export async function createContact(newContact: NewContact): Promise<void> {
+export async function createContact(newContactDb: NewContactDb): Promise<void> {
     return await createDocument<NewContactDb>(
         DbCollections.Contacts,
-        NewContactToNewContactDb(newContact)
+        newContactDb
     );
 }
 
 export async function readContact(
     query: Partial<ContactDb>
-): Promise<Contact | null> {
-    const contact = await readDocument<ContactDb>(
-        DbCollections.Contacts,
-        query
-    );
-    if (contact === null) {
-        return null;
-    }
-    return ContactDbToContact(contact);
+): Promise<ContactDb | null> {
+    return await readDocument<ContactDb>(DbCollections.Contacts, query);
 }
 
-export async function updateContact(contact: Contact): Promise<void> {
-    return await updateDocument<ContactDb>(
-        DbCollections.Contacts,
-        ContactToContactDb(contact)
-    );
+export async function updateContact(contactDb: ContactDb): Promise<void> {
+    return await updateDocument<ContactDb>(DbCollections.Contacts, contactDb);
 }
 
 export async function deleteContact(_id: string): Promise<void> {

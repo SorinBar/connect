@@ -8,6 +8,7 @@ import {
     updateContact,
 } from '../services/contacts';
 import { readUser } from '../services/user';
+import { NewContactDb } from '../models/contact';
 
 export default async function contactsMigrate(): Promise<void> {
     console.log(`Collection: ${DbCollections.Contacts}`);
@@ -21,13 +22,13 @@ export default async function contactsMigrate(): Promise<void> {
         await createContact({
             userId: user1._id,
             phone: '0723847620',
-        } as NewContact);
+        } as NewContactDb);
     }
     if (user2 != null) {
         await createContact({
             userId: user2._id,
             phone: '0727827126',
-        } as NewContact);
+        } as NewContactDb);
     }
 
     console.log(`Done ${DbCollections.Contacts}`);
