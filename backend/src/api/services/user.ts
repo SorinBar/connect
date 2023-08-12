@@ -5,15 +5,23 @@ import {
     readUserDb,
     updateUserDb,
 } from '../../db-layer/services/user';
-import { NewUserToNewUserDb, UserToUserDb } from '../converters/user';
+import {
+    NewUserToNewUserDb,
+    UserDbToUser,
+    UserToUserDb,
+} from '../converters/user';
 import { NewUser, User } from '../models/userModel';
 
 export async function createUser(newUser: NewUser): Promise<void> {
     return await createUserDb(NewUserToNewUserDb(newUser));
 }
 
-export async function readUser(query: Partial<UserDb>): Promise<UserDb | null> {
-    return await readUserDb(query);
+export async function readUser(query: Partial<UserDb>): Promise<User | null> {
+    const user = await readUserDb(query);
+    if (!user) {
+        return null;
+    }
+    return UserDbToUser(user);
 }
 
 export async function updateUser(user: User): Promise<void> {
