@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 import validateSchema from '../middlewares/validateSchema';
-import { newUserSchema, userSchema } from '../schemas/userSchema';
+import { newUserSchema } from '../schemas/userSchema';
 import { UserController } from '../controllers/userController';
 import { NewUser } from '../models/userModel';
 import { ExitCodes } from '../../db-layer/utils/codes';

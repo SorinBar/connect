@@ -12,7 +12,8 @@ function authenticateToken(
     const token = authHeader && authHeader.split(' ')[1];
 
     if (!process.env.JWT_SECRET_KEY) {
-        process.exit(ExitCodes.JwtSecretKey);
+        res.status(500).json('jwt secret key not found');
+        return;
     }
 
     if (token) {
