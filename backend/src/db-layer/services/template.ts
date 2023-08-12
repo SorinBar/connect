@@ -28,6 +28,21 @@ export async function readDocumentDb<T extends Object>(
     return document;
 }
 
+export async function readAllDocumentsDb<T extends Object>(
+    collectionName: DbCollections,
+    query: Partial<T>
+): Promise<T[]> {
+    let documents: T[] = [];
+    try {
+        documents = (await Database.getCollection(collectionName)
+            .find(query)
+            .toArray()) as unknown as T[];
+    } catch (error) {
+        console.log(error);
+    }
+    return documents;
+}
+
 export async function updateDocumentDb<T extends Object & Id>(
     collectionName: DbCollections,
     document: T

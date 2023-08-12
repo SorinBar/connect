@@ -2,6 +2,7 @@ import { UserDb } from '../../db-layer/models/user';
 import {
     createUserDb,
     deleteUserDb,
+    readAllUsersDb,
     readUserDb,
     updateUserDb,
 } from '../../db-layer/services/user';
@@ -22,6 +23,11 @@ export async function readUser(query: Partial<UserDb>): Promise<User | null> {
         return null;
     }
     return UserDbToUser(user);
+}
+
+export async function readAllUsers(query: Partial<UserDb>): Promise<User[]> {
+    const users = await readAllUsersDb(query);
+    return users.map((userDb) => UserDbToUser(userDb));
 }
 
 export async function updateUser(user: User): Promise<void> {

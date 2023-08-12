@@ -1,18 +1,25 @@
 import { Router, Request, Response } from 'express';
 import validateSchema from '../middlewares/validateSchema';
-import { newUserSchema } from '../schemas/userSchema';
-import { UserController } from '../controllers/userController';
-import { NewUser } from '../models/userModel';
 import authenticateToken from '../middlewares/authenticate';
+import { userSchema } from '../schemas/userSchema';
+import { UserController } from '../controllers/userController';
+import { User } from '../models/userModel';
 
 const userRouter = Router();
 userRouter.use(authenticateToken);
 
 userRouter.patch(
     '/',
-    validateSchema(newUserSchema),
+    validateSchema(userSchema),
     async (req: Request, res: Response) => {
-        res.json('ok');
+        const user = await UserController.patchUser(req.body as User);
+        if (user == null) {
+            res.status(400).json(
+                'User do not exist or email is already in use'
+            );
+        } else {
+            res.json(user);
+        }
     }
 );
 

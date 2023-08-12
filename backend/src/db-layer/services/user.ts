@@ -4,6 +4,7 @@ import { NewUserDb, UserDb } from '../models/user';
 import {
     createDocumentDb,
     deleteDocumentDb,
+    readAllDocumentsDb,
     readDocumentDb,
     updateDocumentDb,
 } from './template';
@@ -16,6 +17,12 @@ export async function readUserDb(
     query: Partial<UserDb>
 ): Promise<UserDb | null> {
     return await readDocumentDb<UserDb>(DbCollections.Users, query);
+}
+
+export async function readAllUsersDb(
+    query: Partial<UserDb>
+): Promise<UserDb[]> {
+    return await readAllDocumentsDb(DbCollections.Users, query);
 }
 
 export async function updateUserDb(userDb: UserDb): Promise<void> {

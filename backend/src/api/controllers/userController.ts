@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb';
 import { NewUser, User } from '../models/userModel';
-import { createUser, readUser } from '../services/user';
+import { createUser, readUser, updateUser } from '../services/user';
 import { Login } from '../models/loginModel';
 
 export class UserController {
@@ -29,5 +29,19 @@ export class UserController {
         }))
             ? true
             : false;
+    }
+
+    public static async patchUser(user: User): Promise<User | null> {
+        const oldUser = await this.getUserById(user._id);
+        const emailUser = await this.getUserByEmail(user.email);
+
+        if (oldUser == null) {
+            return null;
+        }
+        if (emailUser != null && emailUser._id != oldUser._id) {
+            return null;
+        }
+        await updateUser(user);
+        return await this.getUserById(user._id);
     }
 }

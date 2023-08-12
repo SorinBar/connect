@@ -16,7 +16,7 @@ authRouter.post(
     async (req: Request, res: Response) => {
         const userExists = await UserController.isUser(req.body.email);
         if (userExists) {
-            res.status(404).json({ message: 'email is already used' });
+            res.status(404).json({ message: 'Email is already used' });
         } else {
             const user = await UserController.addUser(req.body as NewUser);
             res.send(user);
