@@ -2,24 +2,26 @@ import { ObjectId } from 'mongodb';
 import { DbCollections } from '../database';
 import { NewUserDb, UserDb } from '../models/user';
 import {
-    createDocument,
-    deleteDocument,
-    readDocument,
-    updateDocument,
+    createDocumentDb,
+    deleteDocumentDb,
+    readDocumentDb,
+    updateDocumentDb,
 } from './template';
 
-export async function createUser(newUserDb: NewUserDb): Promise<void> {
-    return await createDocument<NewUserDb>(DbCollections.Users, newUserDb);
+export async function createUserDb(newUserDb: NewUserDb): Promise<void> {
+    return await createDocumentDb<NewUserDb>(DbCollections.Users, newUserDb);
 }
 
-export async function readUser(query: Partial<UserDb>): Promise<UserDb | null> {
-    return await readDocument<UserDb>(DbCollections.Users, query);
+export async function readUserDb(
+    query: Partial<UserDb>
+): Promise<UserDb | null> {
+    return await readDocumentDb<UserDb>(DbCollections.Users, query);
 }
 
-export async function updateUser(userDb: UserDb): Promise<void> {
-    return await updateDocument<UserDb>(DbCollections.Users, userDb);
+export async function updateUserDb(userDb: UserDb): Promise<void> {
+    return await updateDocumentDb<UserDb>(DbCollections.Users, userDb);
 }
 
-export async function deleteUser(_id: string): Promise<void> {
-    return await deleteDocument(DbCollections.Users, new ObjectId(_id));
+export async function deleteUserDb(_id: string): Promise<void> {
+    return await deleteDocumentDb(DbCollections.Users, new ObjectId(_id));
 }

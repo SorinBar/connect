@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb';
-import { NewUser, User } from '../../api/models/user';
-import { NewUserDb, UserDb } from '../models/user';
+import { NewUser, User } from '../models/userModel';
+import { NewUserDb, UserDb } from '../../db-layer/models/user';
 
 export function NewUserToNewUserDb(newUser: NewUser): NewUserDb {
     return {

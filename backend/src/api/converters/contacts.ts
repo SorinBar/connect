@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb';
-import { Contact, NewContact } from '../../api/models/contacts';
-import { ContactDb, NewContactDb } from '../models/contact';
+import { Contact, NewContact } from '../models/contactModel';
+import { ContactDb, NewContactDb } from '../../db-layer/models/contact';
 
 export function NewContactToNewContactDb(newContact: NewContact): NewContactDb {
     return {

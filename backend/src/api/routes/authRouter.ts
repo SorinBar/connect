@@ -8,6 +8,7 @@ authRouter.post(
     '/',
     validateSchema(newUserSchema),
     (req: Request, res: Response) => {
+        console.log(req.body);
         res.status(204).send();
     }
 );

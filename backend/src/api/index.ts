@@ -1,10 +1,8 @@
 import express from 'express';
 import router from './routes/router';
 import logger from './middlewares/logger';
-import { Database, DbCollections } from '../db-layer/database';
+import { Database } from '../db-layer/database';
 import { ExitCodes } from '../db-layer/utils/codes';
-import { createUser } from '../db-layer/services/user';
-import { ObjectId } from 'mongodb';
 
 const connected = Database.connect();
 if (!connected) {
