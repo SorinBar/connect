@@ -22,13 +22,13 @@ export class UserController {
         return await readUser({ email });
     }
 
-    public static async verifyUser(loginCredentials: Login): Promise<boolean> {
-        return (await readUser({
+    public static async verifyUser(
+        loginCredentials: Login
+    ): Promise<User | null> {
+        return await readUser({
             email: loginCredentials.email,
             password: loginCredentials.password,
-        }))
-            ? true
-            : false;
+        });
     }
 
     public static async patchUser(user: User): Promise<User | null> {

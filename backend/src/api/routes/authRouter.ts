@@ -31,18 +31,16 @@ authRouter.get(
         if (!process.env.JWT_SECRET_KEY) {
             process.exit(ExitCodes.JwtSecretKey);
         }
-        const validCredentials = await UserController.verifyUser(
-            req.body as Login
-        );
-        if (validCredentials) {
+        const verifiedUser = await UserController.verifyUser(req.body as Login);
+        if (verifiedUser != null) {
             const token = sign(
-                { email: req.body.email },
+                { _id: verifiedUser._id },
                 process.env.JWT_SECRET_KEY,
                 { expiresIn: '1h' }
             );
             res.json({ token });
         } else {
-            res.status(401).json('Bad Credentials');
+            res.status(401).json('Bad credentials');
         }
     }
 );

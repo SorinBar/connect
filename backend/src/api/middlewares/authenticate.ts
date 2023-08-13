@@ -1,7 +1,6 @@
 import express, { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import * as dotenv from 'dotenv';
-import { ExitCodes } from '../../db-layer/utils/codes';
 
 function authenticateToken(
     req: Request,
@@ -21,6 +20,7 @@ function authenticateToken(
             if (err) {
                 return res.status(403).json('Token is invalid or expired');
             }
+            res.locals.user = user;
             next();
         });
     } else {
