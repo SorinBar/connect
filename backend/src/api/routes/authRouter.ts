@@ -7,6 +7,7 @@ import { ExitCodes } from '../../db-layer/utils/codes';
 import { sign } from 'jsonwebtoken';
 import { loginSchema } from '../schemas/loginSchema';
 import { Login } from '../models/loginModel';
+import { ContactController } from '../controllers/contactController';
 
 const authRouter = Router();
 
@@ -19,7 +20,22 @@ authRouter.post(
             res.status(404).json({ message: 'Email is already used' });
         } else {
             const user = await UserController.addUser(req.body as NewUser);
-            res.send(user);
+            if (!user) {
+                res.status(500).json({ message: 'Add user database error' });
+                return;
+            }
+            const contact = await ContactController.addContact({
+                userId: user._id,
+            });
+            if (!contact) {
+                UserController.removeUser(user._id);
+                res.status(500).json({ message: 'Add contact database error' });
+                return;
+            }
+            res.send({
+                user: user,
+                contact: contact,
+            });
         }
     }
 );

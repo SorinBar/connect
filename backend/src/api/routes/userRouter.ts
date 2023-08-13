@@ -9,6 +9,20 @@ import permissionValidation from '../middlewares/permission';
 const userRouter = Router();
 userRouter.use(authenticateToken);
 
+userRouter.get(
+    '/:userId',
+    validatePath(userPathSchema),
+    permissionValidation,
+    async (req: Request, res: Response) => {
+        const user = await UserController.getUserById(req.params.userId);
+        if (user == null) {
+            res.status(400).json({ message: 'User not found' });
+        } else {
+            res.json(user);
+        }
+    }
+);
+
 userRouter.patch(
     '/:userId',
     validatePath(userPathSchema),

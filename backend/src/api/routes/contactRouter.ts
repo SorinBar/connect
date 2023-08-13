@@ -5,7 +5,6 @@ import permissionValidation from '../middlewares/permission';
 import {
     contactPatchSchema,
     contactPathSchema,
-    contactSchema,
 } from '../schemas/contactSchema';
 import { ContactController } from '../controllers/contactController';
 import { Contact } from '../models/contactModel';

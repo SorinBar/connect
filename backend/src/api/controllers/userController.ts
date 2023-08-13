@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb';
 import { NewUser, User } from '../models/userModel';
-import { createUser, readUser, updateUser } from '../services/user';
+import { createUser, deleteUser, readUser, updateUser } from '../services/user';
 import { Login } from '../models/loginModel';
 
 export class UserController {
@@ -43,5 +43,9 @@ export class UserController {
         }
         await updateUser(user);
         return await this.getUserById(user._id);
+    }
+
+    public static async removeUser(_id: string): Promise<void> {
+        return await deleteUser(_id);
     }
 }
