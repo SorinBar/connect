@@ -1,8 +1,12 @@
-import { Router } from 'express'
-import singUpRouter from './authRouter'
+import { Router } from 'express';
+import authRouter from './authRouter';
+import userRouter from './userRouter';
+import contactRouter from './contactRouter';
 
-const router = Router()
+const router = Router();
 
-router.use('/auth', singUpRouter)
+router.use('/auth', authRouter);
+router.use('/user', userRouter);
+router.use('/contact', contactRouter);
 
-export default router
+export default router;

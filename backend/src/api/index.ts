@@ -1,16 +1,23 @@
-import express from 'express'
-import router from './routes/router'
-import logger from './middlewares/logger'
+import express from 'express';
+import router from './routes/router';
+import logger from './middlewares/logger';
+import { Database } from '../db-layer/database';
+import { ExitCodes } from '../db-layer/utils/codes';
 
-const app = express()
-const port = 3000
+const connected = Database.connect();
+if (!connected) {
+    process.exit(ExitCodes.DbConnect);
+}
 
-app.use(express.urlencoded({ extended: true }))
-app.use(express.json())
-app.use(logger)
+const app = express();
+const port = 3000;
 
-app.use('/', router)
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(logger);
+
+app.use('/', router);
 
 app.listen(port, () => {
-    console.log(`Server is running at http://localhost:${port}`)
-})
+    console.log(`Server is running at http://localhost:${port}`);
+});

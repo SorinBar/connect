@@ -2,7 +2,7 @@ import { ObjectId } from 'mongodb';
 import { Database, DbCollections } from '../database';
 import { Id } from '../utils/id';
 
-export async function createDocument<T extends Object>(
+export async function createDocumentDb<T extends Object>(
     collectionName: DbCollections,
     newDocument: T
 ): Promise<void> {
@@ -13,7 +13,7 @@ export async function createDocument<T extends Object>(
     }
 }
 
-export async function readDocument<T extends Object>(
+export async function readDocumentDb<T extends Object>(
     collectionName: DbCollections,
     query: Partial<T>
 ): Promise<T | null> {
@@ -28,7 +28,22 @@ export async function readDocument<T extends Object>(
     return document;
 }
 
-export async function updateDocument<T extends Object & Id>(
+export async function readAllDocumentsDb<T extends Object>(
+    collectionName: DbCollections,
+    query: Partial<T>
+): Promise<T[]> {
+    let documents: T[] = [];
+    try {
+        documents = (await Database.getCollection(collectionName)
+            .find(query)
+            .toArray()) as unknown as T[];
+    } catch (error) {
+        console.log(error);
+    }
+    return documents;
+}
+
+export async function updateDocumentDb<T extends Object & Id>(
     collectionName: DbCollections,
     document: T
 ): Promise<void> {
@@ -42,7 +57,7 @@ export async function updateDocument<T extends Object & Id>(
     }
 }
 
-export async function deleteDocument(
+export async function deleteDocumentDb(
     collectionName: DbCollections,
     _id: ObjectId
 ): Promise<void> {
