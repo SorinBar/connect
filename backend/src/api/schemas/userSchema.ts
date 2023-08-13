@@ -13,3 +13,9 @@ export const userSchema = object().shape({
     email: string().email().required(),
     password: string().required(),
 });
+
+export const patchUserSchema = newUserSchema;
+
+export const userPathSchema = object().shape({
+    userId: id().required(),
+});

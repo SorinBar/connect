@@ -20,7 +20,7 @@ export function ContactToContactDb(contact: Contact): ContactDb {
 export function ContactDbToContact(contactDb: ContactDb): Contact {
     return {
         ...contactDb,
-        userId: contactDb._id.toHexString(),
+        userId: contactDb.userId.toHexString(),
         _id: contactDb._id.toHexString(),
     };
 }

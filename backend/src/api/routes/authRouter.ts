@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import validateSchema from '../middlewares/validateSchema';
+import { validateBody } from '../middlewares/validate';
 import { newUserSchema } from '../schemas/userSchema';
 import { UserController } from '../controllers/userController';
 import { NewUser } from '../models/userModel';
@@ -12,7 +12,7 @@ const authRouter = Router();
 
 authRouter.post(
     '/',
-    validateSchema(newUserSchema),
+    validateBody(newUserSchema),
     async (req: Request, res: Response) => {
         const userExists = await UserController.isUser(req.body.email);
         if (userExists) {
@@ -26,7 +26,7 @@ authRouter.post(
 
 authRouter.get(
     '/',
-    validateSchema(loginSchema),
+    validateBody(loginSchema),
     async (req: Request, res: Response) => {
         if (!process.env.JWT_SECRET_KEY) {
             process.exit(ExitCodes.JwtSecretKey);

@@ -6,7 +6,7 @@ function permissionValidation(
     res: Response,
     next: express.NextFunction
 ) {
-    if (res.locals.user._id !== req.body._id) {
+    if (res.locals.user._id !== req.params.userId) {
         res.status(401).json(
             'This user do not have the permissions to modify another user'
         );
