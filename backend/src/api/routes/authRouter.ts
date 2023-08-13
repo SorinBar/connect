@@ -54,7 +54,7 @@ authRouter.get(
                 process.env.JWT_SECRET_KEY,
                 { expiresIn: '1h' }
             );
-            res.json({ token });
+            res.json({ userId: verifiedUser._id, token });
         } else {
             res.status(401).json('Bad credentials');
         }
