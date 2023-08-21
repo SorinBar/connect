@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "dev": "nodemon --exec ts-node src/api/index.ts",
+        "dev": "PORT=3000 nodemon --exec ts-node src/api/index.ts",
         "migrations": "ts-node src/db-layer/migrate.ts"
     },
     "author": "",
