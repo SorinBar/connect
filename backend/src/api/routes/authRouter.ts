@@ -12,7 +12,7 @@ import { ContactController } from '../controllers/contactController';
 const authRouter = Router();
 
 authRouter.post(
-    '/',
+    '/sign-up',
     validateBody(newUserSchema),
     async (req: Request, res: Response) => {
         const userExists = await UserController.isUser(req.body.email);
@@ -32,16 +32,13 @@ authRouter.post(
                 res.status(500).json({ message: 'Add contact database error' });
                 return;
             }
-            res.send({
-                user: user,
-                contact: contact,
-            });
+            res.status(204).send();
         }
     }
 );
 
-authRouter.get(
-    '/',
+authRouter.post(
+    '/sign-in',
     validateBody(loginSchema),
     async (req: Request, res: Response) => {
         if (!process.env.JWT_SECRET_KEY) {
@@ -56,7 +53,7 @@ authRouter.get(
             );
             res.json({ userId: verifiedUser._id, token });
         } else {
-            res.status(401).json('Bad credentials');
+            res.status(401).json({ message: 'Bad credentials' });
         }
     }
 );
