@@ -7,8 +7,10 @@ function AppRouter() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/sign-in" Component={SingIn} />
-                <Route path="/sign-up" Component={SingUp} />
+                <Route path="auth">
+                    <Route path="sign-in" Component={SingIn} />
+                    <Route path="sign-up" Component={SingUp} />
+                </Route>
             </Routes>
         </BrowserRouter>
     );

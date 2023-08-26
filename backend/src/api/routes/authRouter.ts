@@ -53,7 +53,7 @@ authRouter.post(
             );
             res.json({ userId: verifiedUser._id, token });
         } else {
-            res.status(401).json({ message: 'Bad credentials' });
+            res.status(401).json({ message: 'Wrong email/password' });
         }
     }
 );

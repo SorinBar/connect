@@ -1,13 +1,13 @@
 import React, { ReactNode, createContext, useContext, useState } from 'react';
 
 interface AuthContextData {
-    _id: string | null;
+    id: string | null;
     token: string | null;
     setToken: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 const AuthContext = createContext<AuthContextData>({
-    _id: null,
+    id: null,
     token: null,
     setToken: () => {},
 });
@@ -20,7 +20,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [token, setToken] = useState<string | null>(null);
 
     const contextValue: AuthContextData = {
-        _id: null,
+        id: null,
         token,
         setToken,
     };

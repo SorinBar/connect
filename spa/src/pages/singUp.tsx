@@ -31,7 +31,7 @@ const SingUp = () => {
     const onCloseSnack = () => {
         setOpenSnack(false);
         if (severitySnack === 'success') {
-            navigate('/sign-in');
+            navigate('/auth/sign-in');
         }
     };
 
@@ -47,7 +47,6 @@ const SingUp = () => {
     const createAccount = async (newUser: NewUser) => {
         try {
             const response = await axios.post(URL, newUser);
-            console.log(response.data.message);
             setMessageSnack(response.data.message);
             setSeveritySnack('success');
             setOpenSnack(true);
@@ -121,16 +120,18 @@ const SingUp = () => {
                                 }
                                 margin="dense"
                             />
-                            <Button
-                                color="primary"
-                                variant="contained"
-                                fullWidth
-                                type="submit"
-                                className="auth-button"
-                                disabled={!(formik.isValid && formik.dirty)}
-                            >
-                                Create account
-                            </Button>
+                            <Grid item marginTop={'8px'}>
+                                <Button
+                                    color="primary"
+                                    variant="contained"
+                                    fullWidth
+                                    type="submit"
+                                    className="auth-button"
+                                    disabled={!(formik.isValid && formik.dirty)}
+                                >
+                                    Create account
+                                </Button>
+                            </Grid>
                         </form>
                     </Grid>
 
@@ -149,7 +150,7 @@ const SingUp = () => {
                             </Typography>
                         </Grid>
                         <Grid>
-                            <Link to="/sign-in">
+                            <Link to="/auth/sign-in">
                                 <Typography color={'blue'} fontSize={14}>
                                     Sign In
                                 </Typography>
