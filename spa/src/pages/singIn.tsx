@@ -1,22 +1,46 @@
 import { useAuthContext } from '../contexts/authContext';
-import { Button, Grid, TextField, Typography } from '@mui/material';
+import { Alert, Button, Grid, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import { SignInData } from '../models/authModel';
 import { signInSchema } from '../schemas/authSchema';
 import '../styles/auth.css';
 import { Link } from 'react-router-dom';
 import CenterContent from '../components/centerContent';
+import axios from 'axios';
+import { useState } from 'react';
+
+const URL = 'http://localhost:3000/auth/sign-in';
 
 const SingIn = () => {
     const authContext = useAuthContext();
+    const [error, setError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState<string | undefined>(
+        undefined
+    );
 
     const formik = useFormik({
         initialValues: { email: '', password: '' } as SignInData,
         onSubmit: (values: SignInData) => {
-            alert(values.email + ' | ' + values.password);
+            login(values);
         },
         validationSchema: signInSchema,
     });
+
+    const login = async (signInData: SignInData) => {
+        setError(false);
+        try {
+            const response = await axios.post(URL, signInData);
+            authContext.id = response.data.userId;
+            authContext.setToken(response.data.token);
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                setErrorMessage(error.response?.data.message);
+            } else {
+                setErrorMessage('Unknown error');
+            }
+            setError(true);
+        }
+    };
 
     return (
         <CenterContent>
@@ -60,16 +84,25 @@ const SingIn = () => {
                                 }
                                 margin="dense"
                             />
-                            <Button
-                                color="primary"
-                                variant="contained"
-                                fullWidth
-                                type="submit"
-                                className="auth-button"
-                                disabled={!(formik.isValid && formik.dirty)}
-                            >
-                                Sign in
-                            </Button>
+                            <Grid item marginTop={'4px'}>
+                                {error && (
+                                    <Alert severity={'error'}>
+                                        {errorMessage}
+                                    </Alert>
+                                )}
+                            </Grid>
+                            <Grid item marginTop={'8px'}>
+                                <Button
+                                    color="primary"
+                                    variant="contained"
+                                    fullWidth
+                                    type="submit"
+                                    className="auth-button"
+                                    disabled={!(formik.isValid && formik.dirty)}
+                                >
+                                    Sign in
+                                </Button>
+                            </Grid>
                         </form>
                     </Grid>
 
@@ -88,7 +121,7 @@ const SingIn = () => {
                             </Typography>
                         </Grid>
                         <Grid>
-                            <Link to="/sign-up">
+                            <Link to="/auth/sign-up">
                                 <Typography color={'blue'} fontSize={14}>
                                     Sign Up
                                 </Typography>
