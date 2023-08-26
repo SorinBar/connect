@@ -10,15 +10,14 @@ import { ContactController } from '../controllers/contactController';
 import { Contact } from '../models/contactModel';
 
 const contactRouter = Router();
-contactRouter.use(authenticateToken);
 
 contactRouter.patch(
     '/:userId',
+    authenticateToken,
     validatePath(contactPathSchema),
     validateBody(contactPatchSchema),
     permissionValidation,
     async (req: Request, res: Response) => {
-        console.log(req.params.userId);
         const oldContact = await ContactController.getContactByUserId(
             req.params.userId
         );
@@ -34,6 +33,22 @@ contactRouter.patch(
             const contact = await ContactController.getContactByUserId(
                 req.params.userId
             );
+            res.json(contact);
+        }
+    }
+);
+
+contactRouter.get(
+    '/:userId',
+    validatePath(contactPathSchema),
+    async (req: Request, res: Response) => {
+        const contact = await ContactController.getContactByUserId(
+            req.params.userId
+        );
+
+        if (contact == null) {
+            res.status(400).json('User contact do not exist');
+        } else {
             res.json(contact);
         }
     }
