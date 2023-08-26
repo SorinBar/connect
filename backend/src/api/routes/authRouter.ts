@@ -17,7 +17,7 @@ authRouter.post(
     async (req: Request, res: Response) => {
         const userExists = await UserController.isUser(req.body.email);
         if (userExists) {
-            res.status(404).json({ message: 'Email is already used' });
+            res.status(400).json({ message: 'Email is already used' });
         } else {
             const user = await UserController.addUser(req.body as NewUser);
             if (!user) {
@@ -32,7 +32,7 @@ authRouter.post(
                 res.status(500).json({ message: 'Add contact database error' });
                 return;
             }
-            res.status(204).send();
+            res.json({ message: 'Account created' });
         }
     }
 );

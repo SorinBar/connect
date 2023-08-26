@@ -1,17 +1,40 @@
-import { Button, Grid, TextField, Typography } from '@mui/material';
+import axios from 'axios';
+import {
+    Alert,
+    Button,
+    Grid,
+    Snackbar,
+    TextField,
+    Typography,
+} from '@mui/material';
+import { useState } from 'react';
 import { useFormik } from 'formik';
+import { Link, useNavigate } from 'react-router-dom';
 import { signUpSchema } from '../schemas/authSchema';
 import { SignUpData } from '../models/authModel';
-import '../styles/auth.css';
-import { Link } from 'react-router-dom';
 import CenterContent from '../components/centerContent';
-import axios from 'axios';
-import { useEffect } from 'react';
 import { NewUser } from '../models/userModel';
+import '../styles/auth.css';
 
 const URL = 'http://localhost:3000/auth/sign-up';
 
 const SingUp = () => {
+    const navigate = useNavigate();
+    const [openSnack, setOpenSnack] = useState(false);
+    const [severitySnack, setSeveritySnack] = useState<
+        'success' | 'error' | undefined
+    >(undefined);
+    const [messageSnack, setMessageSnack] = useState<string | undefined>(
+        undefined
+    );
+
+    const onCloseSnack = () => {
+        setOpenSnack(false);
+        if (severitySnack === 'success') {
+            navigate('/sign-in');
+        }
+    };
+
     const formik = useFormik({
         initialValues: { name: '', email: '', password: '' } as SignUpData,
         onSubmit: (values: SignUpData) => {
@@ -24,15 +47,18 @@ const SingUp = () => {
     const createAccount = async (newUser: NewUser) => {
         try {
             const response = await axios.post(URL, newUser);
-            // Success -> go to sign in
+            console.log(response.data.message);
+            setMessageSnack(response.data.message);
+            setSeveritySnack('success');
+            setOpenSnack(true);
         } catch (error) {
             if (axios.isAxiosError(error)) {
-                console.log(
-                    error.response?.status +
-                        ': ' +
-                        JSON.stringify(error.response?.data)
-                );
+                setMessageSnack(error.response?.data.message);
+            } else {
+                setMessageSnack('Unknown error');
             }
+            setSeveritySnack('error');
+            setOpenSnack(true);
         }
     };
 
@@ -132,6 +158,15 @@ const SingUp = () => {
                     </Grid>
                 </Grid>
             </div>
+            <Snackbar
+                open={openSnack}
+                autoHideDuration={4000}
+                onClose={onCloseSnack}
+            >
+                <Alert severity={severitySnack} onClose={onCloseSnack}>
+                    {messageSnack}
+                </Alert>
+            </Snackbar>
         </CenterContent>
     );
 };
