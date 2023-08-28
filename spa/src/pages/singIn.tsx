@@ -4,7 +4,7 @@ import { useFormik } from 'formik';
 import { SignInData } from '../models/authModel';
 import { signInSchema } from '../schemas/authSchema';
 import '../styles/auth.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import CenterContent from '../components/centerContent';
 import axios from 'axios';
 import { useState } from 'react';
@@ -13,6 +13,7 @@ const URL = 'http://localhost:3000/auth/sign-in';
 
 const SingIn = () => {
     const authContext = useAuthContext();
+    const navigate = useNavigate();
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string | undefined>(
         undefined
@@ -30,8 +31,9 @@ const SingIn = () => {
         setError(false);
         try {
             const response = await axios.post(URL, signInData);
-            authContext.id = response.data.userId;
+            authContext.setId(response.data.userId);
             authContext.setToken(response.data.token);
+            navigate('/profile');
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 setErrorMessage(error.response?.data.message);
