@@ -7,10 +7,23 @@ import { User } from '../models/userModel';
 import permissionValidation from '../middlewares/permission';
 
 const userRouter = Router();
-userRouter.use(authenticateToken);
+
+userRouter.get(
+    '/:userId/name',
+    validatePath(userPathSchema),
+    async (req: Request, res: Response) => {
+        const user = await UserController.getUserById(req.params.userId);
+        if (user == null) {
+            res.status(400).json({ message: 'User not found' });
+        } else {
+            res.json({ name: user.name });
+        }
+    }
+);
 
 userRouter.get(
     '/:userId',
+    authenticateToken,
     validatePath(userPathSchema),
     permissionValidation,
     async (req: Request, res: Response) => {
@@ -25,6 +38,7 @@ userRouter.get(
 
 userRouter.patch(
     '/:userId',
+    authenticateToken,
     validatePath(userPathSchema),
     validateBody(patchUserSchema),
     permissionValidation,
