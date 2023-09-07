@@ -1,4 +1,3 @@
-import { useAuthContext } from '../contexts/authContext';
 import { Alert, Button, Grid, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import { SignInData } from '../models/authModel';
@@ -8,11 +7,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import CenterContent from '../components/centerContent';
 import axios from 'axios';
 import { useState } from 'react';
+import { setSession } from '../utils/sessionCookies';
 
 const URL = 'http://localhost:3000/auth/sign-in';
 
 const SingIn = () => {
-    const authContext = useAuthContext();
     const navigate = useNavigate();
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string | undefined>(
@@ -31,9 +30,8 @@ const SingIn = () => {
         setError(false);
         try {
             const response = await axios.post(URL, signInData);
-            authContext.setId(response.data.userId);
-            authContext.setToken(response.data.token);
-            navigate('/profile');
+            setSession(response.data.userId, response.data.token);
+            navigate('/account');
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 setErrorMessage(error.response?.data.message);
