@@ -12,6 +12,7 @@ export function setSession(userId: string, token: string): void {
         }),
         {
             expires: 1 / 24,
+            sameSite: 'strict',
         }
     );
 }
