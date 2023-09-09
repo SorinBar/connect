@@ -9,6 +9,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import EditIcon from '@mui/icons-material/Edit';
 import LogoutIcon from '@mui/icons-material/Logout';
 import QRCode from 'qrcode.react';
+import { tab } from '@testing-library/user-event/dist/tab';
 
 const USER_URL = 'http://localhost:3000/user/';
 
@@ -36,36 +37,32 @@ const Account = () => {
         }
     };
 
-    const accountTabClick = () => {
-        setActiveTab([true, false, false, false]);
-    };
-
-    const qrTabClick = () => {
-        setActiveTab([false, true, false, false]);
-    };
-
-    const editTabClick = () => {
-        setActiveTab([false, false, true, false]);
-    };
-
-    const logoutTabClick = () => {
-        setActiveTab([false, false, false, true]);
+    const activateTab = (index: number) => {
+        const n = 4;
+        if (index >= n) {
+            return () => {};
+        }
+        return () => {
+            const tabs: boolean[] = Array.from({ length: n }, () => false);
+            tabs[index] = true;
+            setActiveTab(tabs);
+        };
     };
 
     return (
         <Box>
             <Drawer anchor="left" variant="permanent">
                 <List>
-                    <ListItemButton onClick={accountTabClick}>
+                    <ListItemButton onClick={activateTab(0)}>
                         <AccountCircleIcon />
                     </ListItemButton>
-                    <ListItemButton onClick={qrTabClick}>
+                    <ListItemButton onClick={activateTab(1)}>
                         <QrCode2Icon />
                     </ListItemButton>
-                    <ListItemButton onClick={editTabClick}>
+                    <ListItemButton onClick={activateTab(2)}>
                         <EditIcon />
                     </ListItemButton>
-                    <ListItemButton onClick={logoutTabClick}>
+                    <ListItemButton onClick={activateTab(3)}>
                         <LogoutIcon />
                     </ListItemButton>
                 </List>
