@@ -9,20 +9,15 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import EditIcon from '@mui/icons-material/Edit';
 import LogoutIcon from '@mui/icons-material/Logout';
 import QRCode from 'qrcode.react';
-import { tab } from '@testing-library/user-event/dist/tab';
+import LogoutConfirmation from '../components/logoutConfirmation';
 
 const USER_URL = 'http://localhost:3000/user/';
 
 const Account = () => {
     const navigate = useNavigate();
-    const [activeTab, setActiveTab] = useState<boolean[]>([
-        true,
-        false,
-        false,
-        false,
-    ]);
+    const [activeTab, setActiveTab] = useState<boolean[]>([true, false, false]);
     const [qrUrl, setQrUrl] = useState<string | undefined>(undefined);
-
+    const [logoutOpen, setLogoutOpen] = useState(false);
     useEffect(() => {
         load();
     }, []);
@@ -38,7 +33,7 @@ const Account = () => {
     };
 
     const activateTab = (index: number) => {
-        const n = 4;
+        const n = 3;
         if (index >= n) {
             return () => {};
         }
@@ -62,7 +57,11 @@ const Account = () => {
                     <ListItemButton onClick={activateTab(2)}>
                         <EditIcon />
                     </ListItemButton>
-                    <ListItemButton onClick={activateTab(3)}>
+                    <ListItemButton
+                        onClick={() => {
+                            setLogoutOpen(true);
+                        }}
+                    >
                         <LogoutIcon />
                     </ListItemButton>
                 </List>
@@ -77,7 +76,7 @@ const Account = () => {
                                 non tempora veritatis ea iure quibusdam odio
                                 tempore, voluptatibus necessitatibus. Eligendi
                                 eum necessitatibus, aliquid voluptates sapiente
-                                nulla incidunt iure.
+                                nulla incidunt iulogoutOpenre.
                             </div>
                         </Grid>
                         <Grid item>
@@ -112,17 +111,8 @@ const Account = () => {
                         <div>EDIT</div>
                     </Box>
                 )}
-                {activeTab[3] && (
-                    <Box
-                        display="flex"
-                        alignContent="center"
-                        justifyContent="center"
-                        marginTop={5}
-                    >
-                        <div>LOGOUT</div>
-                    </Box>
-                )}
             </Box>
+            <LogoutConfirmation open={logoutOpen} setOpen={setLogoutOpen} />
         </Box>
     );
 };
