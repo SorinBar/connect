@@ -110,13 +110,20 @@ const AccountEditContact = () => {
     };
 
     return (
-        <div>
+        <div
+            style={{
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+            }}
+        >
             <Grid
+                item
                 container
                 direction={'column'}
-                padding={1}
-                paddingLeft={2}
-                paddingRight={2}
+                padding={2}
+                maxWidth={500}
             >
                 <Grid item>
                     <form onSubmit={formik.handleSubmit}>

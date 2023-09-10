@@ -1,25 +1,43 @@
-import { Grid } from '@mui/material';
+import { Avatar, Grid, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { SessionData } from '../models/sessionModel';
+import { getSession } from '../utils/sessionCookies';
+import axios from 'axios';
+
+const URL = 'http://localhost:3000/user/';
 
 const AccountProfile = () => {
+    const [name, setName] = useState('');
+
+    useEffect(() => {
+        load();
+    }, []);
+
+    const load = async () => {
+        const session: SessionData | undefined = getSession();
+        if (session) {
+            try {
+                const response = await axios.get(
+                    URL + session.userId + '/name'
+                );
+                setName(response.data.name);
+            } catch (error) {
+                if (axios.isAxiosError(error)) {
+                    console.log(error.response?.data);
+                } else {
+                    console.log('Unknown error');
+                }
+            }
+        }
+    };
+
     return (
-        <Grid container direction="column" padding={3} rowGap={10}>
-            <Grid item>
-                <div>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    Inventore cupiditate, corporis non tempora veritatis ea iure
-                    quibusdam odio tempore, voluptatibus necessitatibus.
-                    Eligendi eum necessitatibus, aliquid voluptates sapiente
-                    nulla incidunt iulogoutOpenre.
-                </div>
+        <Grid container direction={'column'} alignItems={'center'}>
+            <Grid item margin={3}>
+                <Avatar sx={{ width: '100px', height: '100px' }} />
             </Grid>
             <Grid item>
-                <div>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    Inventore cupiditate, corporis non tempora veritatis ea iure
-                    quibusdam odio tempore, voluptatibus necessitatibus.
-                    Eligendi eum necessitatibus, aliquid voluptates sapiente
-                    nulla incidunt iure.
-                </div>
+                <Typography variant="h5">{name}</Typography>
             </Grid>
         </Grid>
     );
