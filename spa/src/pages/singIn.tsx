@@ -45,7 +45,7 @@ const SingIn = () => {
     return (
         <CenterContent>
             <div className="auth-form">
-                <Grid container width={350} direction={'column'}>
+                <Grid container maxWidth={350} direction={'column'}>
                     <Grid item>
                         <form onSubmit={formik.handleSubmit}>
                             <TextField

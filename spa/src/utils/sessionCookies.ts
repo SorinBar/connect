@@ -12,6 +12,7 @@ export function setSession(userId: string, token: string): void {
         }),
         {
             expires: 1 / 24,
+            sameSite: 'strict',
         }
     );
 }
@@ -22,4 +23,8 @@ export function getSession(): SessionData | undefined {
         return JSON.parse(sessionText) as SessionData;
     }
     return undefined;
+}
+
+export function clearSession(): void {
+    Cookies.remove(COOKIE_NAME);
 }
