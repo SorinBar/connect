@@ -5,6 +5,7 @@ import { patchUserSchema, userPathSchema } from '../schemas/userSchema';
 import { UserController } from '../controllers/userController';
 import { User } from '../models/userModel';
 import permissionValidation from '../middlewares/permission';
+import { genHash } from '../utils/hash';
 
 const userRouter = Router();
 
@@ -43,8 +44,10 @@ userRouter.patch(
     validateBody(patchUserSchema),
     permissionValidation,
     async (req: Request, res: Response) => {
+        // Not used
         const user = await UserController.patchUser({
             ...req.body,
+            password: genHash(req.body.password),
             _id: req.params.userId,
         } as User);
         if (user == null) {

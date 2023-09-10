@@ -8,6 +8,7 @@ import { sign } from 'jsonwebtoken';
 import { loginSchema } from '../schemas/loginSchema';
 import { Login } from '../models/loginModel';
 import { ContactController } from '../controllers/contactController';
+import { genHash } from '../utils/hash';
 
 const authRouter = Router();
 
@@ -19,7 +20,10 @@ authRouter.post(
         if (userExists) {
             res.status(400).json({ message: 'Email is already used' });
         } else {
-            const user = await UserController.addUser(req.body as NewUser);
+            const user = await UserController.addUser({
+                ...req.body,
+                password: genHash(req.body.password),
+            } as NewUser);
             if (!user) {
                 res.status(500).json({ message: 'Add user database error' });
                 return;

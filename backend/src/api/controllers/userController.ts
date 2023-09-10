@@ -2,6 +2,7 @@ import { ObjectId } from 'mongodb';
 import { NewUser, User } from '../models/userModel';
 import { createUser, deleteUser, readUser, updateUser } from '../services/user';
 import { Login } from '../models/loginModel';
+import { genHash } from '../utils/hash';
 
 export class UserController {
     public static async isUser(email: string): Promise<boolean> {
@@ -27,7 +28,7 @@ export class UserController {
     ): Promise<User | null> {
         return await readUser({
             email: loginCredentials.email,
-            password: loginCredentials.password,
+            password: genHash(loginCredentials.password),
         });
     }
 
