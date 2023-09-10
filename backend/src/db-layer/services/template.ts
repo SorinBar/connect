@@ -48,9 +48,9 @@ export async function updateDocumentDb<T extends Object & Id>(
     document: T
 ): Promise<void> {
     try {
-        await Database.getCollection(collectionName).updateOne(
+        await Database.getCollection(collectionName).replaceOne(
             { _id: document._id },
-            { $set: document }
+            document
         );
     } catch (error) {
         console.log(error);

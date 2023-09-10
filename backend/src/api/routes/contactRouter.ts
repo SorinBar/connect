@@ -23,7 +23,7 @@ contactRouter.patch(
         );
 
         if (oldContact == null) {
-            res.status(400).json('User contact do not exist');
+            res.status(400).json({ message: 'User contact do not exist' });
         } else {
             await ContactController.patchContact({
                 ...req.body,
@@ -33,7 +33,7 @@ contactRouter.patch(
             const contact = await ContactController.getContactByUserId(
                 req.params.userId
             );
-            res.json(contact);
+            res.json({ contact, message: 'Contact updated successfully' });
         }
     }
 );

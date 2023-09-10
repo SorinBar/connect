@@ -5,26 +5,34 @@ import {
     DialogContent,
     DialogContentText,
 } from '@mui/material';
-import React, { useState } from 'react';
-import { setSession } from '../utils/sessionCookies';
+import React from 'react';
+
+import { clearSession } from '../utils/sessionCookies';
+import { useNavigate } from 'react-router-dom';
 
 export interface LogoutConfirmationProps {
     open: boolean;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const LogoutConfirmation: React.FC<LogoutConfirmationProps> = (props) => {
+const AccountLogout: React.FC<LogoutConfirmationProps> = ({
+    open,
+    setOpen,
+}) => {
+    const navigate = useNavigate();
+
     const confirmClick = () => {
-        props.setOpen(false);
-        setSession('', '');
+        setOpen(false);
+        clearSession();
+        navigate('/auth/sign-in');
     };
 
     const cancelClick = () => {
-        props.setOpen(false);
+        setOpen(false);
     };
 
     return (
-        <Dialog open={props.open}>
+        <Dialog open={open}>
             <DialogContent>
                 <DialogContentText color="black">
                     Are you sure you want to log out?
@@ -42,4 +50,4 @@ const LogoutConfirmation: React.FC<LogoutConfirmationProps> = (props) => {
     );
 };
 
-export default LogoutConfirmation;
+export default AccountLogout;

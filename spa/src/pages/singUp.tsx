@@ -64,7 +64,7 @@ const SingUp = () => {
     return (
         <CenterContent>
             <div className="auth-form">
-                <Grid container direction={'column'}>
+                <Grid container maxWidth={350} direction={'column'}>
                     <Grid item>
                         <form onSubmit={formik.handleSubmit}>
                             <TextField

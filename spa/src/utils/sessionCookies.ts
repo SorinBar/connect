@@ -24,3 +24,7 @@ export function getSession(): SessionData | undefined {
     }
     return undefined;
 }
+
+export function clearSession(): void {
+    Cookies.remove(COOKIE_NAME);
+}
