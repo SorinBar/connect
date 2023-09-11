@@ -42,5 +42,5 @@
 
     ...connect/spa:
     npm start
-    .../connect/backend
+    .../connect/backend:
     npm run dev
