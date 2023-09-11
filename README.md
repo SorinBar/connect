@@ -30,9 +30,17 @@
 
 ---
 
-#### Migrations
+### Migrations
 
     .../connect/backend:
+    docker start connectDb
     npm run migrations
 
 ---
+
+### Run
+
+    ...connect/spa:
+    npm start
+    .../connect/backend
+    npm run dev
