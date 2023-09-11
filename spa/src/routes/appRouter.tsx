@@ -15,6 +15,7 @@ function AppRouter() {
                 </Route>
                 <Route path="account" Component={Account} />
                 <Route path="visit/:userId" Component={Visit} />
+                <Route path="/" Component={Account} />
             </Routes>
         </BrowserRouter>
     );
