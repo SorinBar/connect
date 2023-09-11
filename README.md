@@ -2,6 +2,8 @@
 
 ##### Connect is a versatile and user-friendly mobile application designed to streamline the process of sharing your contact information with ease. With Connect, you can effortlessly create a QR code that acts as a gateway to your digital profile, allowing others to access your contact details and explore your online presence.
 
+---
+
 ### Prerequisites:
 
 -   node - 18.17.0
